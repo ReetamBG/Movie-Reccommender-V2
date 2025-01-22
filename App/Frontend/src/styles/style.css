@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #ffffff;
+}
+
+/* bootstrap customization */
+/* .carousel-control-prev{
+    left: -60px;
+    height: 30px;
+    top: 40%
+}
+
+.carousel-control-next{
+    right: -60px;
+    height: 30px;
+    top: 40%
+} */
+
+.carousel-indicators > button{
+    display: None;
+}
+
