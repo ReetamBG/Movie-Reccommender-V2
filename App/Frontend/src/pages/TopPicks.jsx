@@ -1,4 +1,4 @@
-import Header from "../components/Header"
+import Header from "../components/Navbar"
 import MovieCarousel from "../components/MovieCarousel"
 
 function TopPicks(props) {

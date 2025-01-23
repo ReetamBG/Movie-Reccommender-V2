@@ -77,7 +77,7 @@ function MovieDetails(props) {
                     </div>
                 </div>
                 <img
-                    className="col-4 mt-5 p-0 rounded-3"
+                    className="col-md-4 mt-5 p-0 rounded-3"
                     src={posterURL}
                     style={{ height: "500px", width: "auto", boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px" }}
                 />
@@ -101,8 +101,9 @@ function MovieDetails(props) {
                 </div>
                 <div className="col-md-6">
                     <div className="h-100 p-5 bg-body-tertiary border rounded-3">
-                        <h2>Add borders</h2>
-                        <p>Or, keep it light and add a border for some added definition to the boundaries of your content. Be sure to look under the hood at the source HTML here as we've adjusted the alignment and sizing of both column's content for equal-height.</p>
+                        <h2>Other Details</h2>
+                        <p>Genres and actors and all Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure beatae consectetur porro aspernatur, consequuntur impedit inventore itaque saepe blanditiis distinctio laborum, libero minima? Velit illo voluptate illum doloribus veniam et.
+                        Modi odio id ducimus nostrum et quas culpa aspernatur ab, voluptate, consequatur veniam doloremque doloribus similique vero sunt enim delectus repellat. Ipsam suscipit obcaecati rerum sapiente, asperiores distinctio hic magnam.</p>
                         <button className="btn btn-outline-secondary" type="button">Example button</button>
                     </div>
                 </div>

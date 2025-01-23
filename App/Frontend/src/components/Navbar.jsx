@@ -1,9 +1,4 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/esm/Button'
-
-function Header() {
+function Navbar() {
 	return (
 		
 		<div className="container-fluid bg-dark py-3 px-5" data-bs-theme="dark">
@@ -33,4 +28,4 @@ function Header() {
 	)
 }
 
-export default Header
+export default Navbar
