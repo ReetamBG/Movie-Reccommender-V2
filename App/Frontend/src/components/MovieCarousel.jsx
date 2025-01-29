@@ -1,5 +1,5 @@
-import Carousel from 'react-bootstrap/Carousel';
-import MovieCard from './MovieCard';
+import Carousel from "react-bootstrap/Carousel";
+import MovieCard from "./MovieCard";
 
 function MovieCarousel(props) {
 
@@ -22,7 +22,7 @@ function MovieCarousel(props) {
 							<div className="d-flex flex-row px-5 mx-2">
 								{dataGroup.map((item, itemIdx) => {
 									return (
-										<MovieCard imgSrc="images/image_1.jpg" data={item} key={itemIdx} />
+										<MovieCard imgSrc="images/image_1.jpg" data={item} key={itemIdx} idx={itemIdx} />
 									)
 								})}
 							</div>
