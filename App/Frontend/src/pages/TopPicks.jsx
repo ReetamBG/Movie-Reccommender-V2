@@ -25,6 +25,7 @@ function TopPicks() {
 	return (
 		<div className="container">
 			<p className="display-6 fw-bold px-5 mx-5" style={{ position: "relative", left: "-120px", top: "40px", color: "rgb(51, 60, 69)" }}>Our Top Picks</p>
+			<p className="display-6 fw-bold px-5 mx-5" style={{ position: "relative", left: "-120px", top: "40px", color: "rgb(51, 60, 69)" }}>NOW JUST TO MAKE THE FOR YOU AND ADD DYNAMIC RECOMMENDATIONS SYSTEM</p>
 			<MovieCarousel data={data} />
 			<hr />
 			<p className="display-6 fw-bold px-5 mx-5" style={{ position: "relative", left: "-120px", top: "40px", color: "rgb(51, 60, 69)" }}>Latest Releases</p>
