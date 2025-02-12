@@ -39,6 +39,7 @@ async def movie_details(movie_id: int):
     return movie_details
 
 
+# To fetch movie details given list of movie ids (for carousal)
 @app.post("/movie_details_by_id", response_model=list[Movie])
 async def movie_details_by_id(
     movie_ids: Annotated[list[int], Body()]
@@ -66,14 +67,8 @@ async def recommendations_IB(
     return reccomended_movie_ids
 
 
-@app.get("/recommendations_UB/{user_id}")
-async def recommendations_UB(
-    user_id: Annotated[int, Path()],
-    n_movies: Annotated[int, Query()],
-    n_users: Annotated[int, Query()],
-    db: Session=Depends(get_db)
-):
-    ratings = fetch_ratings(db, user_id)
+def fetch_ratings_df(user_id, db: Session):
+    ratings = fetch_ratings(db=db, user_id=user_id)
     
     # if no ratings then return empty list
     if not ratings:
@@ -92,12 +87,30 @@ async def recommendations_UB(
     
     # Create DataFrame from list of dictionaries
     ratings_df = pd.DataFrame(ratings_dicts)
-    return data_helper.recommend_user_based(ratings_df, n_movies, n_users).tolist()
-    # return a list cuz fastapi cannot jsonify numpy arrays 
-    # recommend_user_based function returns us a numpy array of movie ids
-    # for some reason list(arr) is also not working so switched to np.ndarray.tolist()
+    return ratings_df
 
+
+@app.get("/recommendations_UB/{user_id}")
+async def recommendations_UB(
+    user_id: Annotated[int, Path()],
+    n_movies: Annotated[int, Query()],
+    n_users: Annotated[int, Query()],
+    db: Session=Depends(get_db)
+):
     
+    ratings_df = fetch_ratings_df(db=db, user_id=user_id)
+    return data_helper.recommend_user_based(ratings_df, n_movies, n_users)
+
+
+@app.get("/recommendations_hybrid/{user_id}")
+async def recommendations_hybrid(
+    user_id: Annotated[int, Path()],
+    db: Session=Depends(get_db)
+):
+    ratings_df = fetch_ratings_df(user_id=user_id, db=db)
+    return data_helper.recommend_hybrid(user_ratings=ratings_df, n_movies=10, n_users=5)
+
+
 
 
 @app.get("/search_movie")

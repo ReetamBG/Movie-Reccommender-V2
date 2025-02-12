@@ -112,7 +112,7 @@ function Navbar() {
                 <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><Link to="/" className="nav-link px-3 text-white">Ree Recommender</Link></li>
                     <li><Link to="/" className="nav-link px-3 text-secondary">Top Picks</Link></li>
-                    <li><Link to={`/for_you/${user_id}`} className="nav-link px-3 text-secondary">For You</Link></li>
+                    <li><Link to={"/for_you/"} className="nav-link px-3 text-secondary">For You</Link></li>
                     <li><Link to="/" className="nav-link px-3 text-secondary">About</Link></li>
                 </ul>
 

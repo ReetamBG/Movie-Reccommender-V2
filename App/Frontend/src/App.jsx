@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar"
 import TopPicks from "./pages/TopPicks"
 import Authentication from "./pages/Authentication"
 import MovieDetails from "./pages/MovieDetails"
+import ForYou from "./pages/ForYou"
 import axios from "axios"
 
 function App() {
@@ -26,6 +27,15 @@ function App() {
 					<>
 						<Navbar />
 						<TopPicks />
+					</>
+				)
+			},
+			{
+				path: "/for_you",
+				element: (
+					<>
+						<Navbar />
+						<ForYou />
 					</>
 				)
 			},
