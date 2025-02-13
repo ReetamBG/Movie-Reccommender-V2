@@ -5,11 +5,11 @@ from sklearn.metrics.pairwise import cosine_similarity
 import json
 
 
-tag_vectors = pd.read_parquet("./data/tag_vectors.parquet")
-movies = pd.read_parquet("./data/movie_df.parquet")
-ratings = pd.read_parquet("./data/ratings_df.parquet")
-pt_item_based = pd.read_parquet("./data/pt_item_based.parquet")
-pt_user_based = pd.read_parquet("./data/pt_user_based.parquet")
+tag_vectors = pd.read_parquet("./Backend/data/tag_vectors.parquet")
+movies = pd.read_parquet("./Backend/data/movie_df.parquet")
+ratings = pd.read_parquet("./Backend/data/ratings_df.parquet")
+pt_item_based = pd.read_parquet("./Backend/data/pt_item_based.parquet")
+pt_user_based = pd.read_parquet("./Backend/data/pt_user_based.parquet")
 
       
 # fetching n most popular movies
