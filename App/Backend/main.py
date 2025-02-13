@@ -27,7 +27,7 @@ app.add_middleware(
 
 @app.get("/top_picks", response_model=list[Movie])
 async def top_picks(n_movies: Annotated[int, Query()] = 10):
-    top_picks = data_helper.get_top_picks(n_movies)
+    top_picks = data_helper.get_top_picks(n_movies)[0]
     movies = [Movie(**movie_details_dict) for movie_details_dict in top_picks]
     return movies
 
@@ -108,7 +108,7 @@ async def recommendations_hybrid(
     db: Session=Depends(get_db)
 ):
     ratings_df = fetch_ratings_df(user_id=user_id, db=db)
-    return data_helper.recommend_hybrid(user_ratings=ratings_df, n_movies=10, n_users=5)
+    return data_helper.recommend_hybrid(user_ratings=ratings_df)
 
 
 

@@ -10,7 +10,7 @@ import numpy as np
 import datetime
 
 
-DATABASE_URL = "sqlite:///./database.db"
+DATABASE_URL = "sqlite:///./Backend/database.db"
 
 engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)

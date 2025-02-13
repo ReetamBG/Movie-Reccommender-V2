@@ -21,7 +21,7 @@ def get_top_picks(n_movies):
     # eval on the json string causing problems with certain strings like poster paths with "\" characters 
     # so using json.loads() as it evaluates json properly
 
-    return top_picks_json
+    return top_picks_json, top_picks_id.tolist()
 
 
 def get_movie_details(tmdb_ids: list[int]):     
@@ -75,8 +75,6 @@ def recommend_user_based(user_ratings_in_db, n_movies, n_users):
 
 def recommend_hybrid(
         user_ratings: pd.DataFrame, 
-        n_movies, 
-        n_users,
         percentile=0.5, 
         lambda_=0.02,
 ):
@@ -96,6 +94,39 @@ def recommend_hybrid(
     # threshold = user_ratings["rating"].quantile(percentile)
     # user_ratings = user_ratings[user_ratings["rating"] > threshold]
 
+    # Setting weights to each recommender system based on number of ratings
+    n_ratings = len(user_ratings)
+    if n_ratings == 0:
+        return set(get_top_picks(n_movies=50)[1])
+        # weights = {
+        #     "DB": 50,
+        #     "IB": 0,
+        #     "CB": 0,
+        #     "UB": 0
+        # }
+    elif n_ratings > 0 and n_ratings <= 10:
+        weights = {
+            "DB": 5,
+            "IB": 20,
+            "CB": 20,
+            "UB": 5
+        }
+    elif n_ratings > 10 and n_ratings <= 25:
+        weights = {
+            "DB": 5,
+            "IB": 15,
+            "CB": 15,
+            "UB": 15
+        } 
+    else:
+        weights = {
+            "DB": 5,
+            "IB": 10,
+            "CB": 10,
+            "UB": 25
+        }  
+        
+
     # calculating decayed rating
     user_ratings["timestamp"] = pd.to_datetime(user_ratings["timestamp"])
     user_ratings["days_since_rated"] = (user_ratings["timestamp"].max() - user_ratings["timestamp"]).dt.days        # days passed after that rating
@@ -107,16 +138,21 @@ def recommend_hybrid(
     content_based_recommendations = set()
     item_based_recommendations = set()
     for movie_id in top_rated_movie_ids:
-        content_based_recommendations.update(recommend_content_based(movie_id, 5))
-        item_based_recommendations.update(recommend_item_based(movie_id, 5))
+        content_based_recommendations.update(recommend_content_based(movie_id, weights["CB"] // 5))      # divided by 5 cuz 5 top ratings taken
+        item_based_recommendations.update(recommend_item_based(movie_id, weights["IB"] // 5))            # so 5 times this = weight value 
 
     # getting user based recommnedations
-    user_based_recommendations = set(recommend_user_based(user_ratings, n_movies=10, n_users=3))
+    user_based_recommendations = set(recommend_user_based(user_ratings, n_movies=weights["UB"], n_users=3))
 
     # getting demographic filtering based recommendations (wont add a lot)
-    demographic_based_recommendations = get_top_picks(n_movies=5)
+    demographic_based_recommendations = set(get_top_picks(n_movies=weights["DB"])[1])
+
+    print("DB", len(demographic_based_recommendations)) 
+    print("DB", len(content_based_recommendations)) 
+    print("IB", len(item_based_recommendations)) 
+    print("UB", len(user_based_recommendations)) 
       
-    recommendations_all = content_based_recommendations | item_based_recommendations | user_based_recommendations
+    recommendations_all = content_based_recommendations | item_based_recommendations | user_based_recommendations | demographic_based_recommendations
     return recommendations_all
     
 
@@ -130,7 +166,7 @@ def get_searched_movies(search_query):
 
 
 if __name__ == "__main__":
-	# print(get_movie_details([278, 27]))
+	# print(get_movie_details([278, 27]))                   UID 7807245
 	# print(recommend_content_based(155), 10)
 	# print(get_movie_details(recommend(278)))
 	# print(recommend_item_based(278), 10)
@@ -171,4 +207,4 @@ if __name__ == "__main__":
     user_ratings_in_db = pd.DataFrame(user_ratings_in_db)
     # print(get_user_vector(pt_user_based, user_ratings_in_db))
     # print(recommend_user_based(user_ratings_in_db, 5, 5))
-    print(recommend_hybrid(user_ratings=user_ratings_in_db, n_movies=5, n_users=5))
+    print(recommend_hybrid(user_ratings=user_ratings_in_db))
